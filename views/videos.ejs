@@ -1,0 +1,57 @@
+
+<html>
+    <head>
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+var img = document.createElement('img');
+img.src = 'https://logos-world.net/wp-content/uploads/2021/09/MrBeast-Logo-2018-present.png';
+img.style.borderRadius = '50%';
+document.body.appendChild(img);
+
+img.style.width = '200px';
+
+img.style.margin = 'auto';
+img.style.display = 'block';
+
+img.style.cursor = 'pointer';
+
+img.style.boxShadow = '0px 0px 5px cyan';
+
+img.onclick = function() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'https://api.openai.com/v1/engines/davinci/completions');
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.setRequestHeader('Authorization', 'Bearer 1234');
+  xhr.send(JSON.stringify({
+    'prompt': 'I am a',
+    'max_tokens': 50,
+    'temperature': 0.9,
+    'top_p': 1,
+    'n': 1,
+    'stream': false,
+    'logprobs': null,
+    'stop': ['\n']
+  }));
+  xhr.onload = function() {
+    var response = JSON.parse(xhr.response);
+    var completion = response.choices[0].text;
+    var completionDiv = document.createElement('div');
+    completionDiv.innerHTML = completion;
+    document.body.appendChild(completionDiv);
+  };
+};
+
+var header = document.createElement('h1');
+header.innerHTML = 'Mr. Beast';
+header.style.textAlign = 'center';
+header.style.width = '100%';
+document.body.insertBefore(header, img);
+
+header.style.backgroundColor = 'cyan';
+header.style.color = 'black';
+
+header.style.fontStyle = 'italic';
+});
+        </script>
+    </head>
